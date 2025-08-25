@@ -1,0 +1,12 @@
+name: VillagerMarket
+main: com.joosua.villagermarket.VillagerMarketMain
+version: 1.0
+api-version: 1.19
+author: Joosua
+
+commands:
+  villager:
+    description: Base command for VillagerMarket
+    usage: |
+      /villager create - Creates a villager market
+    permission: villager.use
