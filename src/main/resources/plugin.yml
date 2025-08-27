@@ -9,4 +9,5 @@ commands:
     description: Base command for VillagerMarket
     usage: |
       /villager create - Creates a villager market
+      /villager edit - Gives the player an emerald that is used to edit villagers
     permission: villager.use
