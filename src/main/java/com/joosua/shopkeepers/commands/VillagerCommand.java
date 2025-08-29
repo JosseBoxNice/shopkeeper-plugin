@@ -1,25 +1,22 @@
-package com.joosua.villagermarket.commands;
+package com.joosua.shopkeepers.commands;
 
-import com.joosua.villagermarket.VillagerMarketMain;
+import com.joosua.shopkeepers.ShopkeepersPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.Command;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-
 public class VillagerCommand implements CommandExecutor {
-    private final VillagerMarketMain plugin;
+    private final ShopkeepersPlugin plugin;
 
-    public VillagerCommand(VillagerMarketMain plugin) {
+    public VillagerCommand(ShopkeepersPlugin plugin) {
         this.plugin = plugin;
     }
 

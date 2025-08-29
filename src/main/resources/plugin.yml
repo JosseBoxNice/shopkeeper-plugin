@@ -1,12 +1,12 @@
-name: VillagerMarket
-main: com.joosua.villagermarket.VillagerMarketMain
+name: Shopkeepers
+main: com.joosua.shopkeepers.ShopkeepersPlugin
 version: 1.0
 api-version: 1.19
 author: Joosua
 
 commands:
   villager:
-    description: Base command for VillagerMarket
+    description: Base command for shopkeepers
     usage: |
       /villager create - Creates a villager market
       /villager edit - Gives the player an emerald that is used to edit villagers

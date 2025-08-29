@@ -1,6 +1,6 @@
-package com.joosua.villagermarket.listeners;
+package com.joosua.shopkeepers.listeners;
 
-import com.joosua.villagermarket.VillagerMarketMain;
+import com.joosua.shopkeepers.ShopkeepersPlugin;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -13,16 +13,19 @@ import org.bukkit.inventory.Merchant;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-public class VillagerListener implements Listener {
-    private final VillagerMarketMain plugin;
+import java.util.UUID;
 
-    public VillagerListener(VillagerMarketMain plugin) { this.plugin = plugin; }
+public class VillagerListener implements Listener {
+    private final ShopkeepersPlugin plugin;
+
+    public VillagerListener(ShopkeepersPlugin plugin) { this.plugin = plugin; }
 
     @EventHandler
     public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
         // Check if right-clicked entity is a shopkeeper
         Entity entity = event.getRightClicked();
+        UUID id = entity.getUniqueId();
         PersistentDataContainer data = entity.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin, "shopkeeper");
         if (data.has(key, PersistentDataType.STRING)) {
@@ -36,12 +39,12 @@ public class VillagerListener implements Listener {
                     if (debugEmeraldData.has(debugEmeraldKey, PersistentDataType.STRING)) {
                         String emeraldDataType = debugEmeraldData.get(debugEmeraldKey, PersistentDataType.STRING);
                         if (emeraldDataType.equals("debugEmerald")) {
-                            Inventory edit = plugin.getEditorManager().getVillagerEdit();
+                            Inventory edit = plugin.getEditorManager().getVillagerEdit(id);
                             player.openInventory(edit);
                         }
                     }
                 } else { // If not, open the gui
-                    Merchant villagerGUI = plugin.getVillagerManager().getVillagerGUI();
+                    Merchant villagerGUI = plugin.getVillagerManager().getVillagerGUI(id);
                     player.openMerchant(villagerGUI, true);
                 }
             }

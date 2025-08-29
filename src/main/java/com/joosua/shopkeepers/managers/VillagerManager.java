@@ -1,25 +1,21 @@
-package com.joosua.villagermarket.managers;
+package com.joosua.shopkeepers.managers;
 
-import com.joosua.villagermarket.VillagerMarketMain;
+import com.joosua.shopkeepers.ShopkeepersPlugin;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class VillagerManager {
-    private final VillagerMarketMain plugin;
-    private final List<MerchantRecipe> trades = new ArrayList<>();
+    private final ShopkeepersPlugin plugin;
 
-
-    public VillagerManager(VillagerMarketMain plugin) { this.plugin = plugin; }
+    public VillagerManager(ShopkeepersPlugin plugin) { this.plugin = plugin; }
 
     public void createVillager(Location location) {
         World world = location.getWorld();
@@ -35,13 +31,10 @@ public class VillagerManager {
                 "market");
     }
 
-    public Merchant getVillagerGUI() {
+    public Merchant getVillagerGUI(UUID id) {
         Merchant gui = Bukkit.createMerchant("Shopkeeper");
+        List<MerchantRecipe> trades = plugin.getTradeManager().getTrades(id);
         gui.setRecipes(trades);
         return gui;
-    }
-
-    public void addTrade(MerchantRecipe recipe) {
-        trades.add(recipe);
     }
 }

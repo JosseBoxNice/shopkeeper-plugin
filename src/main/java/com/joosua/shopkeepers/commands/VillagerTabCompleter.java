@@ -1,4 +1,4 @@
-package com.joosua.villagermarket.commands;
+package com.joosua.shopkeepers.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,7 +9,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class VillagerTabCompleter implements TabCompleter {
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+    public List<String> onTabComplete(
+            CommandSender sender,
+            Command cmd, String label, String[] args) {
         if (args.length == 1) {
             return Arrays.asList("create", "edit");
         }
