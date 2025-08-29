@@ -13,6 +13,9 @@ import com.joosua.shopkeepers.managers.MainManager;
 import com.joosua.shopkeepers.managers.VillagerManager;
 import com.joosua.shopkeepers.commands.VillagerCommand;
 import com.joosua.shopkeepers.managers.editor.tradeRemover.RemoveTradeManager;
+import com.joosua.shopkeepers.itemmaker.PlayerStateManager;
+import com.joosua.shopkeepers.itemmaker.CreateItemCommand;
+import com.joosua.shopkeepers.itemmaker.ItemMakerListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ShopkeepersPlugin extends JavaPlugin {
@@ -23,6 +26,7 @@ public class ShopkeepersPlugin extends JavaPlugin {
     private TradeManager tradeManager;
     private RemoveTradeManager removeTradeManager;
     private PageManager pageManager;
+    private PlayerStateManager itemMakerStateManager;
     public void onEnable() {
         if (getCommand("villager") != null) {
             getCommand("villager").setExecutor(new VillagerCommand(this));
@@ -37,6 +41,10 @@ public class ShopkeepersPlugin extends JavaPlugin {
         tradeManager = new TradeManager();
         removeTradeManager = new RemoveTradeManager(this);
         pageManager = new PageManager();
+    itemMakerStateManager = new PlayerStateManager();
+    // register item maker command and listener
+    if (getCommand("createitem") != null) getCommand("createitem").setExecutor(new CreateItemCommand(this));
+    getServer().getPluginManager().registerEvents(new ItemMakerListener(this), this);
         // Enable listeners
         getServer().getPluginManager().registerEvents(new VillagerListener(this), this);
         getServer().getPluginManager().registerEvents(new EditorListener(this), this);
@@ -51,4 +59,5 @@ public class ShopkeepersPlugin extends JavaPlugin {
     public TradeManager getTradeManager() { return tradeManager; }
     public RemoveTradeManager getRemoveTradeManager() { return removeTradeManager; }
     public PageManager getPageManager() { return pageManager; }
+    public PlayerStateManager getItemMakerStateManager() { return itemMakerStateManager; }
 }

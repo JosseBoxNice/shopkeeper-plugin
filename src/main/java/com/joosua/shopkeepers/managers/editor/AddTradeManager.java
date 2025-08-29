@@ -38,6 +38,11 @@ public class AddTradeManager {
         for (int i : emptySlots) {
             inv.setItem(i, filler);
         }
+    // ItemCreator buttons above empty cost/result slots (2 -> returns to cost 11, 6 -> returns to result 15)
+    ItemStack itemCreatorBtnLeft = plugin.getMainManager().quickItem(Material.CRAFTING_TABLE, ChatColor.GOLD + "Item Creator", List.of(ChatColor.GRAY + "Open Item Creator for cost slot"));
+    ItemStack itemCreatorBtnRight = plugin.getMainManager().quickItem(Material.CRAFTING_TABLE, ChatColor.GOLD + "Item Creator", List.of(ChatColor.GRAY + "Open Item Creator for result slot"));
+    inv.setItem(2, itemCreatorBtnLeft);
+    inv.setItem(6, itemCreatorBtnRight);
         // Confirm
         ItemStack confirm = plugin.getMainManager().quickItem(Material.EMERALD, ChatColor.GREEN + "Confirm", null);
         inv.setItem(26, confirm);
@@ -47,12 +52,6 @@ public class AddTradeManager {
         return inv;
     }
     public void confirmTradeAdd(Player player, ItemStack cost, ItemStack result, UUID id) {
-        // Validate inputs: ItemStack may be null or air
-        if (cost == null || cost.getType() == Material.AIR || result == null || result.getType() == Material.AIR) {
-            player.sendMessage(ChatColor.RED + "Please place both a cost and a result item before confirming the trade.");
-            return;
-        }
-
         MerchantRecipe recipe = new MerchantRecipe(result, 999);
         recipe.addIngredient(cost);
         plugin.getTradeManager().addTrade(id, recipe);

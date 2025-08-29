@@ -42,6 +42,16 @@ public class TradeAdderListener implements Listener {
                 Inventory editor = plugin.getEditorManager().getVillagerEdit(id);
                 player.openInventory(editor);
             }
+            // ItemCreator buttons (2 -> cost slot 11, 6 -> result slot 15)
+            if (slot == 2 || slot == 6) {
+                // prepare player state to return to adder
+                var s = plugin.getItemMakerStateManager().get(player.getUniqueId());
+                s.setAwaitingReturnToAdder(true);
+                s.setReturnShopkeeperId(id);
+                s.setReturnSlot(slot == 2 ? 11 : 15);
+                // open item maker main UI
+                player.openInventory(new com.joosua.shopkeepers.itemmaker.CreateItemCommand(plugin).buildMainUI(player));
+            }
         }
     }
 }
