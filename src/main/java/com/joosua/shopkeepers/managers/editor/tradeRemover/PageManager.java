@@ -17,7 +17,6 @@ public class PageManager {
         if (start >= items.size()) return Collections.emptyList();
         return items.subList(start, end);
     }
-
     // Per-player page state
     public int getCurrentPage(UUID player) {
         return currentPageMap.getOrDefault(player, 0);

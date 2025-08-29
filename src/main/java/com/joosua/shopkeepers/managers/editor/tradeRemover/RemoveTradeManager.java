@@ -45,12 +45,16 @@ public class RemoveTradeManager {
         }
         // Add navigation buttons
         int maxPageIndex = Math.max(0, (removeTrades.size() - 1) / 7);
-        if (page > 0) {
-            inv.setItem(21, plugin.getMainManager().quickItem(Material.ARROW, ChatColor.YELLOW + "Previous Page", null));
-        }
-        if (page < maxPageIndex) {
-            inv.setItem(23, plugin.getMainManager().quickItem(Material.ARROW, ChatColor.YELLOW + "Next Page", null));
-        }
+    // Navigation buttons or filler
+    ItemStack prevItem = page > 0
+        ? plugin.getMainManager().quickItem(Material.ARROW, ChatColor.YELLOW + "Previous Page", null)
+        : filler;
+    ItemStack nextItem = page < maxPageIndex
+        ? plugin.getMainManager().quickItem(Material.ARROW, ChatColor.YELLOW + "Next Page", null)
+        : filler;
+
+    inv.setItem(21, prevItem);
+    inv.setItem(23, nextItem);
 
         return inv;
     }
