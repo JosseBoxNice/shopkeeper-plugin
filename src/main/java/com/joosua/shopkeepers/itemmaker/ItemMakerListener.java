@@ -89,12 +89,62 @@ public class ItemMakerListener implements Listener {
             if (type == Material.EMERALD_BLOCK && name.equals(CreateItemCommand.BTN_CREATE) && player != null) {
                 var s = plugin.getItemMakerStateManager().get(player.getUniqueId());
                 if (s.getPreview() == null) { player.sendMessage(ChatColor.RED + "Pick a weapon first."); return; }
-                ItemStack toGive = s.getPreview().clone();
-                var leftover = player.getInventory().addItem(toGive);
-                if (!leftover.isEmpty()) leftover.values().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
-                player.sendMessage(ChatColor.GREEN + "Created and given: " +
-                        (toGive.hasItemMeta() && toGive.getItemMeta().hasDisplayName()
-                                ? toGive.getItemMeta().getDisplayName() : toGive.getType().name()) + ChatColor.GREEN + ".");
+                ItemStack preview = s.getPreview();
+                ItemStack toGive;
+                // If the preview has no custom meta (display name, lore, enchants, unbreakable or custom model data)
+                // then give a plain item of the same Material so it behaves like a normal creative item.
+                boolean hasExtras = false;
+                ItemMeta pm = preview.getItemMeta();
+                if (pm != null) {
+                    if (pm.hasDisplayName() || pm.hasLore() || !pm.getEnchants().isEmpty() || pm.isUnbreakable()) hasExtras = true;
+                    else {
+                        // check for custom model data if available on this server API
+                        try {
+                            if (pm.hasCustomModelData()) hasExtras = true;
+                        } catch (NoSuchMethodError ignored) { /* older API - no custom model data */ }
+                    }
+                }
+                if (!hasExtras) toGive = new ItemStack(preview.getType(), preview.getAmount());
+                else toGive = preview.clone();
+                // If opened from AddTrade, return the preview into the adder slot and reopen adder
+                java.util.UUID shopId = s.getReturnShopkeeperId();
+                int retSlot = s.getReturnSlot();
+                // if not present in state, try player metadata fallback
+                if ((shopId == null || retSlot < 0) && player.hasMetadata("shopkeeper_return")) {
+                    try {
+                        String meta = player.getMetadata("shopkeeper_return").get(0).asString();
+                        String[] parts = meta.split(":");
+                        shopId = java.util.UUID.fromString(parts[0]);
+                        retSlot = Integer.parseInt(parts[1]);
+                    } catch (Exception ignored) { }
+                }
+                if (shopId != null && retSlot >= 0) {
+                    Inventory adder = plugin.getAddTradeManager().createAddTrade(shopId);
+                    // place the returned preview
+                    adder.setItem(retSlot, toGive);
+                    // restore the other slot from saved state so it's not lost
+                    var savedCost = s.getSavedAdderCost();
+                    var savedResult = s.getSavedAdderResult();
+                    if (retSlot == 11) {
+                        if (savedResult != null) adder.setItem(15, savedResult.clone());
+                    } else if (retSlot == 15) {
+                        if (savedCost != null) adder.setItem(11, savedCost.clone());
+                    }
+                    // clear return mapping before opening
+                    s.setAwaitingReturnToAdder(false);
+                    s.setReturnShopkeeperId(null);
+                    s.setReturnSlot(-1);
+                    // clear metadata fallback
+                    try { player.removeMetadata("shopkeeper_return", plugin); } catch (Exception ignored) {}
+                    player.openInventory(adder);
+                    player.sendMessage(ChatColor.GREEN + "Placed item into the trade adder.");
+                } else {
+                    var leftover = player.getInventory().addItem(toGive);
+                    if (!leftover.isEmpty()) leftover.values().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
+                    player.sendMessage(ChatColor.GREEN + "Created and given: " +
+                            (toGive.hasItemMeta() && toGive.getItemMeta().hasDisplayName()
+                                    ? toGive.getItemMeta().getDisplayName() : toGive.getType().name()) + ChatColor.GREEN + ".");
+                }
             }
             return;
         }
@@ -121,6 +171,8 @@ public class ItemMakerListener implements Listener {
                 s.setNameBold(false); s.setNameItalic(false); s.setNameUnder(false); s.setNameStrike(false); s.setNameObfus(false);
                 s.getLoreLines().clear(); s.setLoreHex(null);
                 s.setLoreBold(false); s.setLoreItalic(false); s.setLoreUnder(false); s.setLoreStrike(false); s.setLoreObfus(false);
+                // normalize preview display (strip UI coloring and apply default white)
+                builder.applyStyleToPreview(s);
                 player.openInventory(builder.buildMainUI(player));
                 player.sendMessage(ChatColor.GREEN + "Preview set to " +
                         (clicked.hasItemMeta() ? clicked.getItemMeta().getDisplayName() : type.name()) + ChatColor.GREEN + ".");
@@ -143,6 +195,8 @@ public class ItemMakerListener implements Listener {
             if (player != null && isTool(type)) {
                 var s = plugin.getItemMakerStateManager().get(player.getUniqueId());
                 s.setPreview(clicked.clone());
+                // normalize preview display so it doesn't keep the yellow UI name
+                builder.applyStyleToPreview(s);
                 player.openInventory(builder.buildMainUI(player));
                 player.sendMessage(ChatColor.GREEN + "Preview set to " +
                         (clicked.hasItemMeta() ? clicked.getItemMeta().getDisplayName() : type.name()) + ChatColor.GREEN + ".");
@@ -165,6 +219,8 @@ public class ItemMakerListener implements Listener {
             if (player != null && isArmor(type)) {
                 var s = plugin.getItemMakerStateManager().get(player.getUniqueId());
                 s.setPreview(clicked.clone());
+                // normalize preview display so it doesn't keep the yellow UI name
+                builder.applyStyleToPreview(s);
                 player.openInventory(builder.buildMainUI(player));
                 player.sendMessage(ChatColor.GREEN + "Preview set to " +
                         (clicked.hasItemMeta() ? clicked.getItemMeta().getDisplayName() : type.name()) + ChatColor.GREEN + ".");
@@ -188,6 +244,8 @@ public class ItemMakerListener implements Listener {
             if (player != null && isMisc(type)) {
                 var s = plugin.getItemMakerStateManager().get(player.getUniqueId());
                 s.setPreview(clicked.clone());
+                // normalize preview display so it doesn't keep the yellow UI name
+                builder.applyStyleToPreview(s);
                 player.openInventory(builder.buildMainUI(player));
                 player.sendMessage(ChatColor.GREEN + "Preview set to " +
                         (clicked.hasItemMeta() ? clicked.getItemMeta().getDisplayName() : type.name()) + ChatColor.GREEN + ".");
@@ -426,6 +484,8 @@ public class ItemMakerListener implements Listener {
             String name = event.getMessage().trim();
             Bukkit.getScheduler().runTask(plugin, () -> {
                 s.setNameText(name);
+                // Ensure new names are plain (not italic) by default
+                s.setNameItalic(false);
                 builder.applyStyleToPreview(s);
                 player.openInventory(builder.buildNameUI(player));
                 player.sendMessage(ChatColor.GOLD + "Name set.");

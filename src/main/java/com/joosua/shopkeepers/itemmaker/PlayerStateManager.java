@@ -104,6 +104,10 @@ public class PlayerStateManager {
 	private int returnSlot = -1; // slot index in AddTrade to return preview to (11 or 15)
 	private java.util.UUID returnShopkeeperId;
 
+	// Saved AddTrade items so we can restore the other slot when returning
+	private ItemStack savedAdderCost;
+	private ItemStack savedAdderResult;
+
 	public boolean isAwaitingReturnToAdder() { return awaitingReturnToAdder; }
 	public void setAwaitingReturnToAdder(boolean awaitingReturnToAdder) { this.awaitingReturnToAdder = awaitingReturnToAdder; }
 
@@ -112,6 +116,12 @@ public class PlayerStateManager {
 
 	public java.util.UUID getReturnShopkeeperId() { return returnShopkeeperId; }
 	public void setReturnShopkeeperId(java.util.UUID returnShopkeeperId) { this.returnShopkeeperId = returnShopkeeperId; }
+
+	public ItemStack getSavedAdderCost() { return savedAdderCost; }
+	public void setSavedAdderCost(ItemStack savedAdderCost) { this.savedAdderCost = savedAdderCost; }
+
+	public ItemStack getSavedAdderResult() { return savedAdderResult; }
+	public void setSavedAdderResult(ItemStack savedAdderResult) { this.savedAdderResult = savedAdderResult; }
 	}
 
 	private final ConcurrentHashMap<UUID, PlayerState> states = new ConcurrentHashMap<>();

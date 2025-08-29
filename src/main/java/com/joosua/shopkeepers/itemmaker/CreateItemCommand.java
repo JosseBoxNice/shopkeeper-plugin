@@ -499,45 +499,61 @@ public class CreateItemCommand implements org.bukkit.command.CommandExecutor {
         ItemMeta meta = s.getPreview().getItemMeta();
         if (meta == null) return;
 
-        // Name
+        // Name (use legacy string-based API so this compiles across Bukkit versions)
         String baseName;
-        if (s.getNameText() != null) baseName = s.getNameText();
-        else {
-            Component cur = meta.displayName();
-            baseName = (cur != null) ? PlainTextComponentSerializer.plainText().serialize(cur) : null;
-            if (baseName == null || baseName.isBlank())
+        if (s.getNameText() != null) {
+            baseName = s.getNameText();
+        } else {
+            String cur = meta.hasDisplayName() ? meta.getDisplayName() : null;
+            if (cur != null && !cur.isBlank()) {
+                // strip any existing color codes from the item's original display name so our default white applies
+                baseName = org.bukkit.ChatColor.stripColor(cur);
+            } else {
                 baseName = s.getPreview().getType().name().toLowerCase(Locale.ROOT).replace('_', ' ');
-        }
-        Component name = Component.text(baseName);
-        if (s.getNameHex() != null) {
-            TextColor tc = TextColor.fromHexString(s.getNameHex());
-            if (tc != null) name = name.color(tc);
-        }
-        name = name.decoration(TextDecoration.BOLD, s.isNameBold())
-                .decoration(TextDecoration.ITALIC, s.isNameItalic())
-                .decoration(TextDecoration.UNDERLINED, s.isNameUnder())
-                .decoration(TextDecoration.STRIKETHROUGH, s.isNameStrike())
-                .decoration(TextDecoration.OBFUSCATED, s.isNameObfus());
-        meta.displayName(name);
-
-        // Lore
-        if (!s.getLoreLines().isEmpty()) {
-            List<Component> lore = new ArrayList<>();
-            for (String line : s.getLoreLines()) {
-                Component lc = Component.text(line);
-                if (s.getLoreHex() != null) {
-                    TextColor tc = TextColor.fromHexString(s.getLoreHex());
-                    if (tc != null) lc = lc.color(tc);
-                }
-                lc = lc.decoration(TextDecoration.BOLD, s.isLoreBold())
-                        .decoration(TextDecoration.ITALIC, s.isLoreItalic())
-                        .decoration(TextDecoration.UNDERLINED, s.isLoreUnder())
-                        .decoration(TextDecoration.STRIKETHROUGH, s.isLoreStrike())
-                        .decoration(TextDecoration.OBFUSCATED, s.isLoreObfus());
-                lore.add(lc);
             }
-            meta.lore(lore);
-        } else meta.lore(null);
+        }
+
+        // Only set a custom display name if the player has explicitly changed name/hex/formatting.
+        boolean nameChanged = s.getNameText() != null || (s.getNameHex() != null && !s.getNameHex().isBlank())
+                || s.isNameBold() || s.isNameItalic() || s.isNameUnder() || s.isNameStrike() || s.isNameObfus();
+        if (nameChanged) {
+            StringBuilder nameSb = new StringBuilder();
+            if (s.getNameHex() != null && !s.getNameHex().isBlank()) nameSb.append(legacyHex(s.getNameHex()));
+            else nameSb.append(ChatColor.WHITE);
+            if (s.isNameBold()) nameSb.append(ChatColor.BOLD);
+            if (s.isNameItalic()) nameSb.append(ChatColor.ITALIC);
+            if (s.isNameUnder()) nameSb.append(ChatColor.UNDERLINE);
+            if (s.isNameStrike()) nameSb.append(ChatColor.STRIKETHROUGH);
+            if (s.isNameObfus()) nameSb.append(ChatColor.MAGIC);
+            nameSb.append(baseName);
+            meta.setDisplayName(nameSb.toString());
+        } else {
+            // clear any display name so the item remains a plain vanilla item
+            meta.setDisplayName(null);
+        }
+
+        // Lore (string-based list with formatting)
+        boolean loreChanged = !s.getLoreLines().isEmpty() || (s.getLoreHex() != null && !s.getLoreHex().isBlank())
+                || s.isLoreBold() || s.isLoreItalic() || s.isLoreUnder() || s.isLoreStrike() || s.isLoreObfus();
+        if (loreChanged) {
+            List<String> lore = new ArrayList<>();
+            for (String line : s.getLoreLines()) {
+                StringBuilder lb = new StringBuilder();
+                if (s.getLoreHex() != null && !s.getLoreHex().isBlank()) lb.append(legacyHex(s.getLoreHex()));
+                else lb.append(ChatColor.WHITE);
+                if (s.isLoreBold()) lb.append(ChatColor.BOLD);
+                if (s.isLoreItalic()) lb.append(ChatColor.ITALIC);
+                if (s.isLoreUnder()) lb.append(ChatColor.UNDERLINE);
+                if (s.isLoreStrike()) lb.append(ChatColor.STRIKETHROUGH);
+                if (s.isLoreObfus()) lb.append(ChatColor.MAGIC);
+                lb.append(line);
+                lore.add(lb.toString());
+            }
+            meta.setLore(lore);
+        } else {
+            meta.setLore(null);
+        }
+
         s.getPreview().setItemMeta(meta);
     }
 

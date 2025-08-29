@@ -31,19 +31,26 @@ public class VillagerListener implements Listener {
         if (data.has(key, PersistentDataType.STRING)) {
             String type = data.get(key, PersistentDataType.STRING);
             if (type.equals("market")) {
-                // Check if the player is holding a debug emerald
+                // Check if the player is holding a debug emerald; if so open editor.
+                // Otherwise always open the villager merchant GUI (even if the held item has item meta).
                 ItemStack itemInHand = player.getInventory().getItemInMainHand();
-                if (itemInHand.hasItemMeta()) {
+                boolean opened = false;
+                if (itemInHand != null && itemInHand.hasItemMeta()) {
                     NamespacedKey debugEmeraldKey = new NamespacedKey(plugin, "debugEmerald");
-                    PersistentDataContainer debugEmeraldData = itemInHand.getItemMeta().getPersistentDataContainer();
-                    if (debugEmeraldData.has(debugEmeraldKey, PersistentDataType.STRING)) {
-                        String emeraldDataType = debugEmeraldData.get(debugEmeraldKey, PersistentDataType.STRING);
-                        if (emeraldDataType.equals("debugEmerald")) {
-                            Inventory edit = plugin.getEditorManager().getVillagerEdit(id);
-                            player.openInventory(edit);
+                    var meta = itemInHand.getItemMeta();
+                    if (meta != null) {
+                        PersistentDataContainer debugEmeraldData = meta.getPersistentDataContainer();
+                        if (debugEmeraldData.has(debugEmeraldKey, PersistentDataType.STRING)) {
+                            String emeraldDataType = debugEmeraldData.get(debugEmeraldKey, PersistentDataType.STRING);
+                            if (emeraldDataType != null && emeraldDataType.equals("debugEmerald")) {
+                                Inventory edit = plugin.getEditorManager().getVillagerEdit(id);
+                                player.openInventory(edit);
+                                opened = true;
+                            }
                         }
                     }
-                } else { // If not, open the gui
+                }
+                if (!opened) {
                     Merchant villagerGUI = plugin.getVillagerManager().getVillagerGUI(id);
                     player.openMerchant(villagerGUI, true);
                 }
