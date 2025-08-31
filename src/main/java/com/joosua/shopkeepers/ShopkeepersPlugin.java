@@ -33,12 +33,14 @@ public class ShopkeepersPlugin extends JavaPlugin {
             getCommand("villager").setTabCompleter(new VillagerTabCompleter());
         }
 
-        // Enable managers
+    // Enable managers
         villagerManager = new VillagerManager(this);
         editorManager = new EditorManager(this);
         mainManager = new MainManager();
         addTradeManager = new AddTradeManager(this);
-        tradeManager = new TradeManager();
+    tradeManager = new TradeManager();
+    // load saved trades from disk
+    tradeManager.loadTrades(getDataFolder());
         removeTradeManager = new RemoveTradeManager(this);
         pageManager = new PageManager();
     itemMakerStateManager = new PlayerStateManager();
@@ -50,6 +52,12 @@ public class ShopkeepersPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EditorListener(this), this);
         getServer().getPluginManager().registerEvents(new TradeAdderListener(this), this);
         getServer().getPluginManager().registerEvents(new TradeRemoverListener(this), this);
+    }
+
+    @Override
+    public void onDisable() {
+        // persist trades
+        if (tradeManager != null) tradeManager.saveTrades(getDataFolder());
     }
 
     public VillagerManager getVillagerManager() { return villagerManager; }
