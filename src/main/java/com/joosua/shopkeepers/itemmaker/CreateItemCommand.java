@@ -489,7 +489,17 @@ public class CreateItemCommand implements org.bukkit.command.CommandExecutor {
         ui.setItem(0, quickItem(Material.ARROW, ChatColor.GREEN + "Back", List.of(ChatColor.GRAY + "Return to ItemMaker")));
         ui.setItem(8, quickItem(Material.BARRIER, BTN_CLOSE, List.of(ChatColor.GRAY + "Close ItemMaker")));
         if (state.getPreview() != null) ui.setItem(4, state.getPreview().clone());
-        ui.setItem(22, quickItem(Material.PAPER, ChatColor.AQUA + "Modifiers", List.of(ChatColor.GRAY + "Attributes and more... (In progress)")));
+    // --- Modifier options ---
+    // 1) Food
+    ui.setItem(20, quickItem(Material.APPLE, ChatColor.WHITE + "Food", null));
+    // 2) Misc
+    ui.setItem(21, quickItem(Material.CONDUIT, ChatColor.AQUA + "Misc", null));
+    // 3) Attributes
+    ui.setItem(22, quickItem(Material.NETHER_STAR, ChatColor.YELLOW + "Attributes", null));
+    // 4) Tool
+    ui.setItem(23, quickItem(Material.NETHERITE_HOE, ChatColor.WHITE + "Tool", null));
+    // 5) Tooltip (use FIREWORK_STAR)
+    ui.setItem(24, quickItem(Material.FIREWORK_STAR, ChatColor.WHITE + "Tooltip", null));
         return ui;
     }
 
