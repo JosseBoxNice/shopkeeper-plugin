@@ -11,3 +11,7 @@ commands:
       /villager create - Creates a villager market
       /villager edit - Gives the player an emerald that is used to edit villagers
     permission: villager.use
+  itemcreator:
+    description: Opens itemcreator
+    usage: /itemcreator
+    permission: itemcreator.use 

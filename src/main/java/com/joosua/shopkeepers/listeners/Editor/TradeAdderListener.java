@@ -64,7 +64,7 @@ public class TradeAdderListener implements Listener {
                 // also write metadata on player as a fallback for the return mapping
                 player.setMetadata("shopkeeper_return", new FixedMetadataValue(plugin, id.toString() + ":" + (slot == 2 ? 11 : 15)));
                 // open item maker main UI
-                player.openInventory(new com.joosua.shopkeepers.itemmaker.CreateItemCommand(plugin).buildMainUI(player));
+                player.openInventory(plugin.getCreateItemCommand().getMainUIBuilder().buildMainUI(player, s));
             }
         }
     }

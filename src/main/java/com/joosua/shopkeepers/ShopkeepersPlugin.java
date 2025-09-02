@@ -11,11 +11,13 @@ import com.joosua.shopkeepers.managers.editor.AddTradeManager;
 import com.joosua.shopkeepers.managers.editor.EditorManager;
 import com.joosua.shopkeepers.managers.MainManager;
 import com.joosua.shopkeepers.managers.VillagerManager;
+import com.joosua.shopkeepers.commands.ItemCreatorCommand;
 import com.joosua.shopkeepers.commands.VillagerCommand;
 import com.joosua.shopkeepers.managers.editor.tradeRemover.RemoveTradeManager;
-import com.joosua.shopkeepers.itemmaker.PlayerStateManager;
-import com.joosua.shopkeepers.itemmaker.CreateItemCommand;
-import com.joosua.shopkeepers.itemmaker.ItemMakerListener;
+import com.joosua.shopkeepers.itemmaker.listeners.ItemMakerListener;
+import com.joosua.shopkeepers.itemmaker.listeners.WeaponsUIListener;
+import com.joosua.shopkeepers.itemmaker.state.PlayerStateManager;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ShopkeepersPlugin extends JavaPlugin {
@@ -27,31 +29,40 @@ public class ShopkeepersPlugin extends JavaPlugin {
     private RemoveTradeManager removeTradeManager;
     private PageManager pageManager;
     private PlayerStateManager itemMakerStateManager;
+    private ItemCreatorCommand createItemCommand;
     public void onEnable() {
         if (getCommand("villager") != null) {
             getCommand("villager").setExecutor(new VillagerCommand(this));
             getCommand("villager").setTabCompleter(new VillagerTabCompleter());
         }
+        if (getCommand("itemcreator") != null) {
+            getCommand("itemcreator").setExecutor(new ItemCreatorCommand(this));
+        }
 
     // Enable managers
-        villagerManager = new VillagerManager(this);
-        editorManager = new EditorManager(this);
-        mainManager = new MainManager();
-        addTradeManager = new AddTradeManager(this);
+    villagerManager = new VillagerManager(this);
+    editorManager = new EditorManager(this);
+    mainManager = new MainManager();
+    addTradeManager = new AddTradeManager(this);
     tradeManager = new TradeManager();
+    
     // load saved trades from disk
     tradeManager.loadTrades(getDataFolder());
-        removeTradeManager = new RemoveTradeManager(this);
-        pageManager = new PageManager();
+    removeTradeManager = new RemoveTradeManager(this);
+    pageManager = new PageManager();
     itemMakerStateManager = new PlayerStateManager();
+    createItemCommand = new ItemCreatorCommand(this);
+
     // register item maker command and listener
-    if (getCommand("createitem") != null) getCommand("createitem").setExecutor(new CreateItemCommand(this));
+    if (getCommand("createitem") != null) getCommand("createitem").setExecutor(createItemCommand);
+
+    // Enable listeners
     getServer().getPluginManager().registerEvents(new ItemMakerListener(this), this);
-        // Enable listeners
-        getServer().getPluginManager().registerEvents(new VillagerListener(this), this);
-        getServer().getPluginManager().registerEvents(new EditorListener(this), this);
-        getServer().getPluginManager().registerEvents(new TradeAdderListener(this), this);
-        getServer().getPluginManager().registerEvents(new TradeRemoverListener(this), this);
+    getServer().getPluginManager().registerEvents(new VillagerListener(this), this);
+    getServer().getPluginManager().registerEvents(new EditorListener(this), this);
+    getServer().getPluginManager().registerEvents(new TradeAdderListener(this), this);
+    getServer().getPluginManager().registerEvents(new TradeRemoverListener(this), this);
+    getServer().getPluginManager().registerEvents(new WeaponsUIListener(this), this);
     }
 
     @Override
@@ -68,4 +79,5 @@ public class ShopkeepersPlugin extends JavaPlugin {
     public RemoveTradeManager getRemoveTradeManager() { return removeTradeManager; }
     public PageManager getPageManager() { return pageManager; }
     public PlayerStateManager getItemMakerStateManager() { return itemMakerStateManager; }
+    public ItemCreatorCommand getCreateItemCommand() { return createItemCommand; }
 }
