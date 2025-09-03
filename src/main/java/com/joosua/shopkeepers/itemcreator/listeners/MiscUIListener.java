@@ -4,8 +4,8 @@ import com.joosua.shopkeepers.itemcreator.utils.ItemUtils;
 import com.joosua.shopkeepers.itemcreator.utils.ItemCreatorConstants;
 import com.joosua.shopkeepers.itemcreator.utils.MaterialUtils;
 import com.joosua.shopkeepers.ShopkeepersPlugin;
-import com.joosua.shopkeepers.itemcreator.ui.UIManager;
 import com.joosua.shopkeepers.itemcreator.state.PlayerState;
+import com.joosua.shopkeepers.itemcreator.ui.UIManager;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.EventHandler;
@@ -15,17 +15,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
 import org.bukkit.ChatColor;
 
-public class ToolsUIListener implements Listener {
+public class MiscUIListener implements Listener {
     private final ShopkeepersPlugin plugin;
     private final UIManager uiManager;
-    public ToolsUIListener(ShopkeepersPlugin plugin) {
+    public MiscUIListener(ShopkeepersPlugin plugin) {
         this.plugin = plugin;
         this.uiManager = new UIManager(plugin);
     }
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         String title = event.getView().getTitle();
-        if (!title.equals(ItemCreatorConstants.UI_TITLE_TOOLS)) return;
+        if (!title.equals(ItemCreatorConstants.UI_TITLE_MISC)) return;
 
         HumanEntity clicker = event.getWhoClicked();
         Player player = (clicker instanceof Player) ? (Player) clicker : null;
@@ -43,7 +43,7 @@ public class ToolsUIListener implements Listener {
             if (player != null) player.openInventory(uiManager.getMainUIBuilder().buildMainUI(player, state));
             return;
         }
-        if (MaterialUtils.isTool(type)) {
+        if (MaterialUtils.isMisc(type)) {
             state.setPreview(clicked.clone());
             player.openInventory(uiManager.getMainUIBuilder().buildMainUI(player, state));
             player.sendMessage(ChatColor.GREEN + "Preview set to " +

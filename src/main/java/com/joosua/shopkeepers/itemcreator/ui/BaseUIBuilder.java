@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants;
+import com.joosua.shopkeepers.itemcreator.utils.ItemCreatorConstants;
 import com.joosua.shopkeepers.itemcreator.utils.ItemUtils;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public abstract class BaseUIBuilder {
     }
     
     protected void addCloseButton(Inventory inventory, int slot) {
-        inventory.setItem(slot, ItemUtils.quickItem(Material.BARRIER, ItemMakerConstants.BTN_CLOSE, 
+        inventory.setItem(slot, ItemUtils.quickItem(Material.BARRIER, ItemCreatorConstants.BTN_CLOSE, 
             List.of(ChatColor.GRAY + "Close the ItemMaker")));
     }
     

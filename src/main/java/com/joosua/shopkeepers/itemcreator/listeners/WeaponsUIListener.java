@@ -27,7 +27,7 @@ public class WeaponsUIListener implements Listener {
     @EventHandler
     private void OnInventoryClick(InventoryClickEvent event) {
         String title = event.getView().getTitle();
-        if (!title.equals(com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants.UI_TITLE_WEAPONS)) return;
+        if (!title.equals(com.joosua.shopkeepers.itemcreator.utils.ItemCreatorConstants.UI_TITLE_WEAPONS)) return;
 
         HumanEntity clicker = event.getWhoClicked();
         Player player = (clicker instanceof Player) ? (Player) clicker : null;
@@ -38,7 +38,7 @@ public class WeaponsUIListener implements Listener {
         String name = ItemUtils.getDisplayName(clicked);
         PlayerState state = plugin.getItemMakerStateManager().get(player.getUniqueId());
 
-        if (type == Material.BARRIER && name.equals(com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants.BTN_CLOSE)) {
+        if (type == Material.BARRIER && name.equals(com.joosua.shopkeepers.itemcreator.utils.ItemCreatorConstants.BTN_CLOSE)) {
             clicker.closeInventory();
             return;
         }

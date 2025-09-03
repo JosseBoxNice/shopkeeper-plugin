@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants;
+import com.joosua.shopkeepers.itemcreator.utils.ItemCreatorConstants;
 import com.joosua.shopkeepers.itemcreator.utils.ItemUtils;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 public class ToolsUIBuilder extends BaseUIBuilder {
     
     public Inventory buildToolsUI(Player player) {
-        Inventory ui = createInventory(player, 54, ItemMakerConstants.UI_TITLE_TOOLS);
+        Inventory ui = createInventory(player, 54, ItemCreatorConstants.UI_TITLE_TOOLS);
         fillInventory(ui);
 
         // Navigation buttons

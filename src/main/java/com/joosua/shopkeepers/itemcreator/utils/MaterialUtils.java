@@ -42,7 +42,7 @@ public final class MaterialUtils {
             case STICK, SNOWBALL, EGG, WIND_CHARGE, TOTEM_OF_UNDYING,
                  BUCKET, FISHING_ROD, FIRE_CHARGE, ELYTRA, ENDER_PEARL,
                  SHIELD, GLASS_BOTTLE, PLAYER_HEAD, GOAT_HORN, SHEARS,
-                 FLINT_AND_STEEL, BRUSH, SPYGLASS -> true;
+                 FLINT_AND_STEEL, BRUSH, SPYGLASS, APPLE -> true;
             default -> false;
         };
     }

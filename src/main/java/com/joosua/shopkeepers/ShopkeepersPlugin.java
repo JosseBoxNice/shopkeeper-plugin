@@ -5,6 +5,7 @@ import com.joosua.shopkeepers.itemcreator.listeners.ItemCreatorListener;
 import com.joosua.shopkeepers.itemcreator.listeners.WeaponsUIListener;
 import com.joosua.shopkeepers.itemcreator.listeners.ToolsUIListener;
 import com.joosua.shopkeepers.itemcreator.listeners.ArmorUIListener;
+import com.joosua.shopkeepers.itemcreator.listeners.MiscUIListener;
 import com.joosua.shopkeepers.itemcreator.state.PlayerStateManager;
 import com.joosua.shopkeepers.listeners.Editor.EditorListener;
 import com.joosua.shopkeepers.listeners.Editor.TradeAdderListener;
@@ -65,6 +66,7 @@ public class ShopkeepersPlugin extends JavaPlugin {
     getServer().getPluginManager().registerEvents(new WeaponsUIListener(this), this);
     getServer().getPluginManager().registerEvents(new ToolsUIListener(this), this);
     getServer().getPluginManager().registerEvents(new ArmorUIListener(this), this);
+    getServer().getPluginManager().registerEvents(new MiscUIListener(this), this);
     }
 
     @Override

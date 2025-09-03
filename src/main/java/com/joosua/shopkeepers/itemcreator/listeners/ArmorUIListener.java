@@ -1,7 +1,7 @@
 package com.joosua.shopkeepers.itemcreator.listeners;
 
 import com.joosua.shopkeepers.itemcreator.utils.ItemUtils;
-import com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants;
+import com.joosua.shopkeepers.itemcreator.utils.ItemCreatorConstants;
 import com.joosua.shopkeepers.itemcreator.utils.MaterialUtils;
 import com.joosua.shopkeepers.ShopkeepersPlugin;
 import com.joosua.shopkeepers.itemcreator.state.PlayerState;
@@ -25,7 +25,7 @@ public class ArmorUIListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         String title = event.getView().getTitle();
-        if (!title.equals(ItemMakerConstants.UI_TITLE_ARMOR)) return;
+        if (!title.equals(ItemCreatorConstants.UI_TITLE_ARMOR)) return;
 
         HumanEntity clicker = event.getWhoClicked();
         Player player = (clicker instanceof Player) ? (Player) clicker : null;
@@ -35,7 +35,7 @@ public class ArmorUIListener implements Listener {
 
         Material type = clicked.getType();
         String name = ItemUtils.getDisplayName(clicked);
-        if (type == Material.BARRIER && name.equals(ItemMakerConstants.BTN_CLOSE)) {
+        if (type == Material.BARRIER && name.equals(ItemCreatorConstants.BTN_CLOSE)) {
             clicker.closeInventory(); if (player != null)
             return;
         }

@@ -2,8 +2,8 @@ package com.joosua.shopkeepers.itemcreator.utils;
 
 import org.bukkit.ChatColor;
 
-public final class ItemMakerConstants {
-    private ItemMakerConstants() {} // Prevent instantiation
+public final class ItemCreatorConstants {
+    private ItemCreatorConstants() {} // Prevent instantiation
 
     // Titles
     public static final String UI_TITLE_MAIN = ChatColor.DARK_GREEN + "ItemMaker";
