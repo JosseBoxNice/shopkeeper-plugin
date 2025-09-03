@@ -8,6 +8,7 @@ public class UIManager {
     private final ToolsUIBuilder toolsUIBuilder;
     private final ArmorUIBuilder armorUIBuilder;
     private final MiscUIBuilder miscUIBuilder;
+    private final EnchUIBuilder enchUIBuilder;
 
     public UIManager(ShopkeepersPlugin plugin) {
         this.mainUIBuilder = new MainUIBuilder();
@@ -15,6 +16,7 @@ public class UIManager {
         this.toolsUIBuilder = new ToolsUIBuilder();
         this.armorUIBuilder = new ArmorUIBuilder();
         this.miscUIBuilder = new MiscUIBuilder();
+        this.enchUIBuilder = new EnchUIBuilder(plugin);
     }
 
     public MainUIBuilder getMainUIBuilder() {
@@ -35,5 +37,9 @@ public class UIManager {
 
     public MiscUIBuilder getMiscUIBuilder() {
         return miscUIBuilder;
+    }
+
+    public EnchUIBuilder getEnchUIBuilder() {
+        return enchUIBuilder;
     }
 }

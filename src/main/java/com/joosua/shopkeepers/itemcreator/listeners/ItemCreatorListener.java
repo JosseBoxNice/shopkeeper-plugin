@@ -36,6 +36,7 @@ public class ItemCreatorListener implements Listener {
 
         HumanEntity clicker = event.getWhoClicked();
         Player player = (clicker instanceof Player) ? (Player) clicker : null;
+        PlayerState state = plugin.getItemMakerStateManager().get(player.getUniqueId());
 
         Material type = clicked.getType();
         String name = ItemUtils.getDisplayName(clicked);
@@ -46,7 +47,6 @@ public class ItemCreatorListener implements Listener {
         }
 
         if (type == Material.EMERALD_BLOCK && name.equals(ItemCreatorConstants.BTN_CREATE)) {
-            PlayerState state = plugin.getItemMakerStateManager().get(player.getUniqueId());
                 if (state.getPreview() == null) { player.sendMessage(ChatColor.RED + "Pick a weapon first."); return; }
                 ItemStack toGive = state.getPreview().clone();
                 var leftover = player.getInventory().addItem(toGive);
@@ -82,6 +82,14 @@ public class ItemCreatorListener implements Listener {
         if (type == Material.STICK && name.equals(ItemCreatorConstants.BTN_MISC)) {
             if (player != null) {
                 player.openInventory(uiManager.getMiscUIBuilder().buildMiscUI(player));
+            }
+            return;
+        }
+
+        if (type == Material.ENCHANTED_BOOK && name.equals(ItemCreatorConstants.BTN_ENCH)) {
+            if (player != null) {
+                player.openInventory(uiManager.getEnchUIBuilder().buildEnchUI(player));
+                if (state.getPreview() == null) { player.sendMessage(ChatColor.RED + "You need to pick an item first!"); return; }
             }
             return;
         }
