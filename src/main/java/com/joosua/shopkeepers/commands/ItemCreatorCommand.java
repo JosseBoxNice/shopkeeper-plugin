@@ -25,7 +25,7 @@ public class ItemCreatorCommand implements CommandExecutor {
             return true;
         }
         
-        PlayerState state = plugin.getItemMakerStateManager().get(player.getUniqueId());
+        PlayerState state = plugin.getPlayerStateManager().get(player.getUniqueId());
         player.openInventory(uiManager.getMainUIBuilder().buildMainUI(player, state));
         return true;
     }

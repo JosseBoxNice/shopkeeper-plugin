@@ -1,9 +1,18 @@
 package com.joosua.shopkeepers.itemcreator.utils;
 
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.NamespacedKey;
 
 public final class ItemCreatorConstants {
     private ItemCreatorConstants() {} // Prevent instantiation
+
+    public static NamespacedKey ENCH_KEY;
+
+    // Keys
+    public static void init(Plugin plugin) {
+        ENCH_KEY = new NamespacedKey(plugin, "enchant_key");
+    }
 
     // Titles
     public static final String UI_TITLE_MAIN = ChatColor.DARK_GREEN + "ItemMaker";

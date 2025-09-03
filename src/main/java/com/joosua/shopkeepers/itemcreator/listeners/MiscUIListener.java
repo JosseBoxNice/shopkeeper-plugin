@@ -31,7 +31,7 @@ public class MiscUIListener implements Listener {
         Player player = (clicker instanceof Player) ? (Player) clicker : null;
         ItemStack clicked = event.getCurrentItem();
         if (clicked == null) return;
-        PlayerState state = plugin.getItemMakerStateManager().get(player.getUniqueId());
+        PlayerState state = plugin.getPlayerStateManager().get(player.getUniqueId());
 
         Material type = clicked.getType();
         String name = ItemUtils.getDisplayName(clicked);

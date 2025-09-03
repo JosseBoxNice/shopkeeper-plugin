@@ -6,6 +6,8 @@ import com.joosua.shopkeepers.itemcreator.listeners.WeaponsUIListener;
 import com.joosua.shopkeepers.itemcreator.listeners.ToolsUIListener;
 import com.joosua.shopkeepers.itemcreator.listeners.ArmorUIListener;
 import com.joosua.shopkeepers.itemcreator.listeners.MiscUIListener;
+import com.joosua.shopkeepers.itemcreator.listeners.EnchUIListener;
+import com.joosua.shopkeepers.itemcreator.listeners.ChatInputListener;
 import com.joosua.shopkeepers.itemcreator.state.PlayerStateManager;
 import com.joosua.shopkeepers.listeners.Editor.EditorListener;
 import com.joosua.shopkeepers.listeners.Editor.TradeAdderListener;
@@ -21,6 +23,7 @@ import com.joosua.shopkeepers.commands.ItemCreatorCommand;
 import com.joosua.shopkeepers.commands.VillagerCommand;
 import com.joosua.shopkeepers.managers.editor.tradeRemover.RemoveTradeManager;
 import com.joosua.shopkeepers.itemcreator.ui.UIManager;
+import com.joosua.shopkeepers.itemcreator.utils.ItemCreatorConstants;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,7 +35,7 @@ public class ShopkeepersPlugin extends JavaPlugin {
     private TradeManager tradeManager;
     private RemoveTradeManager removeTradeManager;
     private PageManager pageManager;
-    private PlayerStateManager itemMakerStateManager;
+    private PlayerStateManager playerStateManager;
     private UIManager uiManager;
     public void onEnable() {
         if (getCommand("villager") != null) {
@@ -51,7 +54,7 @@ public class ShopkeepersPlugin extends JavaPlugin {
     tradeManager = new TradeManager();
     removeTradeManager = new RemoveTradeManager(this);
     pageManager = new PageManager();
-    itemMakerStateManager = new PlayerStateManager();
+    playerStateManager = new PlayerStateManager();
     uiManager = new UIManager(this);
     
     // load saved trades from disk
@@ -67,6 +70,11 @@ public class ShopkeepersPlugin extends JavaPlugin {
     getServer().getPluginManager().registerEvents(new ToolsUIListener(this), this);
     getServer().getPluginManager().registerEvents(new ArmorUIListener(this), this);
     getServer().getPluginManager().registerEvents(new MiscUIListener(this), this);
+    getServer().getPluginManager().registerEvents(new EnchUIListener(this), this);
+    getServer().getPluginManager().registerEvents(new ChatInputListener(this), this);
+
+    // Enable keys
+    ItemCreatorConstants.init(this);
     }
 
     @Override
@@ -82,6 +90,6 @@ public class ShopkeepersPlugin extends JavaPlugin {
     public TradeManager getTradeManager() { return tradeManager; }
     public RemoveTradeManager getRemoveTradeManager() { return removeTradeManager; }
     public PageManager getPageManager() { return pageManager; }
-    public PlayerStateManager getItemMakerStateManager() { return itemMakerStateManager; }
+    public PlayerStateManager getPlayerStateManager() { return playerStateManager; }
     public UIManager getUIManager() { return uiManager; }
 }

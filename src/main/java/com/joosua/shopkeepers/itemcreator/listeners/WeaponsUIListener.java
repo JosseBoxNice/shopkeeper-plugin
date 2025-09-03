@@ -36,7 +36,7 @@ public class WeaponsUIListener implements Listener {
 
         Material type = clicked.getType();
         String name = ItemUtils.getDisplayName(clicked);
-        PlayerState state = plugin.getItemMakerStateManager().get(player.getUniqueId());
+        PlayerState state = plugin.getPlayerStateManager().get(player.getUniqueId());
 
         if (type == Material.BARRIER && name.equals(com.joosua.shopkeepers.itemcreator.utils.ItemCreatorConstants.BTN_CLOSE)) {
             clicker.closeInventory();

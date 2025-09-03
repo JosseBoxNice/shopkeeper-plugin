@@ -8,7 +8,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -19,15 +18,13 @@ import java.util.List;
 
 public class EnchUIBuilder extends BaseUIBuilder {
     private final ShopkeepersPlugin plugin;
-    private final NamespacedKey ENCH_KEY;
 
     public EnchUIBuilder(ShopkeepersPlugin plugin) {
         this.plugin = plugin;
-        this.ENCH_KEY = new NamespacedKey(plugin, "enchant_key");
     } 
 
     public Inventory buildEnchUI(Player player) {
-        Inventory ui = createInventory(player, 54, ItemCreatorConstants.UI_TITLE_MAIN);
+        Inventory ui = createInventory(player, 54, ItemCreatorConstants.UI_TITLE_ENCHANTS);
         fillInventory(ui);
 
         addBackButton(ui, 0);
@@ -35,7 +32,7 @@ public class EnchUIBuilder extends BaseUIBuilder {
             List.of(ChatColor.GRAY + "Choose an armor piece to preview")));
         addCloseButton(ui, 8);
 
-        PlayerState state = plugin.getItemMakerStateManager().get(player.getUniqueId());
+        PlayerState state = plugin.getPlayerStateManager().get(player.getUniqueId());
 
         if (state.getPreview() != null) ui.setItem(4, state.getPreview().clone());
         // else ui.setItem(4, quickItem(Material.BARRIER, ChatColor.YELLOW + "No Preview", List.of(ChatColor.GRAY + "Pick a weapon first")));
@@ -46,7 +43,7 @@ public class EnchUIBuilder extends BaseUIBuilder {
                     List.of(ChatColor.GRAY + "Click to set level 0–255"));
             ItemMeta meta = book.getItemMeta();
             PersistentDataContainer pdc = meta.getPersistentDataContainer();
-            pdc.set(ENCH_KEY, PersistentDataType.STRING, ench.getKey().toString());
+            pdc.set(ItemCreatorConstants.ENCH_KEY, PersistentDataType.STRING, ench.getKey().toString());
             book.setItemMeta(meta);
 
             if (slot >= 53) break;

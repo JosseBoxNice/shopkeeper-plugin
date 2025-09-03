@@ -49,7 +49,7 @@ public class TradeAdderListener implements Listener {
             // ItemCreator buttons (2 -> cost slot 11, 6 -> result slot 15)
             if (slot == 2 || slot == 6) {
                 // prepare player state to return to adder
-                var s = plugin.getItemMakerStateManager().get(player.getUniqueId());
+                var s = plugin.getPlayerStateManager().get(player.getUniqueId());
                 // Reset the ItemMaker preview and styling so AddTrade opens a fresh creator
                 s.setPreview(null);
                 s.setNameText(null); s.setNameHex(null);
