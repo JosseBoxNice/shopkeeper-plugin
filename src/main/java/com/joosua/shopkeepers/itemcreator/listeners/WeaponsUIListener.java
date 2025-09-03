@@ -1,12 +1,11 @@
 package com.joosua.shopkeepers.itemcreator.listeners;
 
 import com.joosua.shopkeepers.ShopkeepersPlugin;
-import com.joosua.shopkeepers.commands.ItemCreatorCommand;
+import com.joosua.shopkeepers.itemcreator.ui.UIManager;
 import com.joosua.shopkeepers.itemcreator.state.PlayerState;
 import com.joosua.shopkeepers.itemcreator.utils.ItemUtils;
 import com.joosua.shopkeepers.itemcreator.utils.MaterialUtils;
 import com.joosua.shopkeepers.itemcreator.utils.StyleUtils;
-
 import org.bukkit.event.Listener;
 import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,11 +17,11 @@ import org.bukkit.Material;
 
 public class WeaponsUIListener implements Listener {
     private final ShopkeepersPlugin plugin;
-    private final ItemCreatorCommand command;
+    private final UIManager uiManager;
 
     public WeaponsUIListener(ShopkeepersPlugin plugin) {
         this.plugin = plugin;
-        this.command = new ItemCreatorCommand(plugin);
+        this.uiManager = new UIManager(plugin);
     }
 
     @EventHandler
@@ -46,7 +45,7 @@ public class WeaponsUIListener implements Listener {
 
         if (type == Material.ARROW) {
             if (player != null) {
-                player.openInventory(command.getMainUIBuilder().buildMainUI(player, state));
+                player.openInventory(uiManager.getMainUIBuilder().buildMainUI(player, state));
             }
             return;
         }
@@ -55,7 +54,7 @@ public class WeaponsUIListener implements Listener {
             state.setPreview(clicked.clone());
             StyleUtils.resetStateStyles(state);
             StyleUtils.applyStyleToPreview(state);
-            player.openInventory(command.getMainUIBuilder().buildMainUI(player, state));
+            player.openInventory(uiManager.getMainUIBuilder().buildMainUI(player, state));
             player.sendMessage(ChatColor.GREEN + "Preview set to " + ItemUtils.getItemDisplayName(clicked, type) + ChatColor.GREEN + ".");
         }
         event.setCancelled(true);

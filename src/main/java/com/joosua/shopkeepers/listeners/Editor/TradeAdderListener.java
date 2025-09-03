@@ -2,6 +2,7 @@ package com.joosua.shopkeepers.listeners.Editor;
 
 import com.joosua.shopkeepers.ShopkeepersPlugin;
 import com.joosua.shopkeepers.holders.IdInventoryHolder;
+import com.joosua.shopkeepers.itemcreator.ui.UIManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,8 +16,10 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 public class TradeAdderListener implements Listener {
     private final ShopkeepersPlugin plugin;
+    private final UIManager uiManager;
     public TradeAdderListener(ShopkeepersPlugin plugin) {
         this.plugin = plugin;
+        this.uiManager = new UIManager(plugin);
     }
     @EventHandler
     public void onTradeAdderClick(InventoryClickEvent event) {
@@ -64,7 +67,7 @@ public class TradeAdderListener implements Listener {
                 // also write metadata on player as a fallback for the return mapping
                 player.setMetadata("shopkeeper_return", new FixedMetadataValue(plugin, id.toString() + ":" + (slot == 2 ? 11 : 15)));
                 // open item maker main UI
-                player.openInventory(plugin.getCreateItemCommand().getMainUIBuilder().buildMainUI(player, s));
+                player.openInventory(uiManager.getMainUIBuilder().buildMainUI(player, s));
             }
         }
     }

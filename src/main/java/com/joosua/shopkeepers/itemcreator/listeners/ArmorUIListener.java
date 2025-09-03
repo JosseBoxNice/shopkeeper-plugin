@@ -4,8 +4,8 @@ import com.joosua.shopkeepers.itemcreator.utils.ItemUtils;
 import com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants;
 import com.joosua.shopkeepers.itemcreator.utils.MaterialUtils;
 import com.joosua.shopkeepers.ShopkeepersPlugin;
-import com.joosua.shopkeepers.commands.ItemCreatorCommand;
 import com.joosua.shopkeepers.itemcreator.state.PlayerState;
+import com.joosua.shopkeepers.itemcreator.ui.UIManager;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.EventHandler;
@@ -17,10 +17,10 @@ import org.bukkit.ChatColor;
 
 public class ArmorUIListener implements Listener {
     private final ShopkeepersPlugin plugin;
-    private final ItemCreatorCommand command;
+    private final UIManager uiManager;
     public ArmorUIListener(ShopkeepersPlugin plugin) {
         this.plugin = plugin;
-        this.command = new ItemCreatorCommand(plugin);
+        this.uiManager = new UIManager(plugin);
     }
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -40,12 +40,12 @@ public class ArmorUIListener implements Listener {
             return;
         }
         if (type == Material.ARROW) {
-            if (player != null) player.openInventory(command.getMainUIBuilder().buildMainUI(player, state));
+            if (player != null) player.openInventory(uiManager.getMainUIBuilder().buildMainUI(player, state));
             return;
         }
         if (MaterialUtils.isArmor(type)) {
             state.setPreview(clicked.clone());
-            player.openInventory(command.getMainUIBuilder().buildMainUI(player, state));
+            player.openInventory(uiManager.getMainUIBuilder().buildMainUI(player, state));
             player.sendMessage(ChatColor.GREEN + "Preview set to " +
             (clicked.hasItemMeta() ? clicked.getItemMeta().getDisplayName() : type.name()) + ChatColor.GREEN + ".");
         }

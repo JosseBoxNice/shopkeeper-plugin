@@ -78,8 +78,17 @@ public final class ItemUtils {
     }
 
     public static String getDisplayName(ItemStack item) {
-        if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) return "";
-        return item.getItemMeta().getDisplayName();
+        if (item == null) return "";
+        if (item.hasItemMeta() || item.getItemMeta().hasDisplayName()) {
+            return item.getItemMeta().getDisplayName();
+        }
+
+        return formatMaterialName(item.getType());
+    }
+
+    private static String formatMaterialName(Material mat) {
+        String name = mat.name().toLowerCase(Locale.ROOT).replace('_', ' ');
+        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 
     public static String getItemDisplayName(ItemStack item, Material type) {

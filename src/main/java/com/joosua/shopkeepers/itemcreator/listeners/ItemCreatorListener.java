@@ -1,9 +1,9 @@
 package com.joosua.shopkeepers.itemcreator.listeners;
 
 import com.joosua.shopkeepers.ShopkeepersPlugin;
-import com.joosua.shopkeepers.commands.ItemCreatorCommand;
+import com.joosua.shopkeepers.itemcreator.ui.UIManager;
+import com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants;
 import com.joosua.shopkeepers.itemcreator.utils.ItemUtils;
-
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -13,11 +13,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class ItemMakerListener implements Listener {
-    private final ItemCreatorCommand command;
+public class ItemCreatorListener implements Listener {
+    private final UIManager uiManager;
 
-    public ItemMakerListener(ShopkeepersPlugin plugin) {
-        this.command = new ItemCreatorCommand(plugin);
+    public ItemCreatorListener(ShopkeepersPlugin plugin) {
+        this.uiManager = new UIManager(plugin);
     }
 
     @EventHandler
@@ -36,21 +36,28 @@ public class ItemMakerListener implements Listener {
         Material type = clicked.getType();
         String name = ItemUtils.getDisplayName(clicked);
 
-        if (type == Material.BARRIER && name.equals(com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants.BTN_CLOSE)) {
+        if (type == Material.BARRIER && name.equals(ItemMakerConstants.BTN_CLOSE)) {
             clicker.closeInventory();
             return;
         }
 
-        if (type == Material.DIAMOND_SWORD && name.equals(com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants.BTN_WEAPONS)) {
+        if (type == Material.DIAMOND_SWORD && name.equals(ItemMakerConstants.BTN_WEAPONS)) {
             if (player != null) {
-                player.openInventory(command.getWeaponsUIBuilder().buildWeaponsUI(player));
+                player.openInventory(uiManager.getWeaponsUIBuilder().buildWeaponsUI(player));
             }
             return;
         }
 
-        if (type == Material.NETHERITE_PICKAXE && name.equals(com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants.BTN_TOOLS)) {
+        if (type == Material.NETHERITE_PICKAXE && name.equals(ItemMakerConstants.BTN_TOOLS)) {
             if (player != null) {
-                player.openInventory(command.getToolsUIBuilder().buildToolsUI(player));
+                player.openInventory(uiManager.getToolsUIBuilder().buildToolsUI(player));
+            }
+            return;
+        }
+
+        if (type == Material.DIAMOND_CHESTPLATE && name.equals(ItemMakerConstants.BTN_ARMOR)) {
+            if (player != null) {
+                player.openInventory(uiManager.getArmorUIBuilder().buildArmorUI(player));
             }
             return;
         }
