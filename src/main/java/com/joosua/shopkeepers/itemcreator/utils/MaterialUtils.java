@@ -1,4 +1,4 @@
-package com.joosua.shopkeepers.itemmaker.utils;
+package com.joosua.shopkeepers.itemcreator.utils;
 
 import org.bukkit.Material;
 

@@ -1,10 +1,11 @@
 package com.joosua.shopkeepers.commands;
 
 import com.joosua.shopkeepers.ShopkeepersPlugin;
-import com.joosua.shopkeepers.itemmaker.state.PlayerState;
-import com.joosua.shopkeepers.itemmaker.ui.MainUIBuilder;
-import com.joosua.shopkeepers.itemmaker.ui.WeaponsUIBuilder;
-import com.joosua.shopkeepers.itemmaker.ui.ToolsUIBuilder;
+import com.joosua.shopkeepers.itemcreator.state.PlayerState;
+import com.joosua.shopkeepers.itemcreator.ui.MainUIBuilder;
+import com.joosua.shopkeepers.itemcreator.ui.ToolsUIBuilder;
+import com.joosua.shopkeepers.itemcreator.ui.WeaponsUIBuilder;
+
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.Command;
@@ -27,7 +28,7 @@ public class ItemCreatorCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("§cOnly players can use this command.");
+            sender.sendMessage("§cOnly players can do this.");
             return true;
         }
         

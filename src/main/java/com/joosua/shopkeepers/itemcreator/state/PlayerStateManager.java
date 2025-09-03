@@ -1,4 +1,4 @@
-package com.joosua.shopkeepers.itemmaker.state;
+package com.joosua.shopkeepers.itemcreator.state;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;

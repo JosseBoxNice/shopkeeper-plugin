@@ -1,6 +1,11 @@
 package com.joosua.shopkeepers;
 
 import com.joosua.shopkeepers.commands.VillagerTabCompleter;
+import com.joosua.shopkeepers.itemcreator.listeners.ItemMakerListener;
+import com.joosua.shopkeepers.itemcreator.listeners.WeaponsUIListener;
+import com.joosua.shopkeepers.itemcreator.listeners.ToolsUIListener;
+import com.joosua.shopkeepers.itemcreator.listeners.ArmorUIListener;
+import com.joosua.shopkeepers.itemcreator.state.PlayerStateManager;
 import com.joosua.shopkeepers.listeners.Editor.EditorListener;
 import com.joosua.shopkeepers.listeners.Editor.TradeAdderListener;
 import com.joosua.shopkeepers.listeners.Editor.TradeRemoverListener;
@@ -14,9 +19,6 @@ import com.joosua.shopkeepers.managers.VillagerManager;
 import com.joosua.shopkeepers.commands.ItemCreatorCommand;
 import com.joosua.shopkeepers.commands.VillagerCommand;
 import com.joosua.shopkeepers.managers.editor.tradeRemover.RemoveTradeManager;
-import com.joosua.shopkeepers.itemmaker.listeners.ItemMakerListener;
-import com.joosua.shopkeepers.itemmaker.listeners.WeaponsUIListener;
-import com.joosua.shopkeepers.itemmaker.state.PlayerStateManager;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,13 +58,15 @@ public class ShopkeepersPlugin extends JavaPlugin {
     // register item maker command and listener
     if (getCommand("createitem") != null) getCommand("createitem").setExecutor(createItemCommand);
 
-    // Enable listeners
+   // Enable listeners
     getServer().getPluginManager().registerEvents(new ItemMakerListener(this), this);
     getServer().getPluginManager().registerEvents(new VillagerListener(this), this);
     getServer().getPluginManager().registerEvents(new EditorListener(this), this);
     getServer().getPluginManager().registerEvents(new TradeAdderListener(this), this);
     getServer().getPluginManager().registerEvents(new TradeRemoverListener(this), this);
     getServer().getPluginManager().registerEvents(new WeaponsUIListener(this), this);
+    getServer().getPluginManager().registerEvents(new ToolsUIListener(this), this);
+    getServer().getPluginManager().registerEvents(new ArmorUIListener(this), this);
     }
 
     @Override

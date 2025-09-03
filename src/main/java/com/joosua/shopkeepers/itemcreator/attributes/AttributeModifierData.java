@@ -1,4 +1,4 @@
-package com.joosua.shopkeepers.itemmaker.attributes;
+package com.joosua.shopkeepers.itemcreator.attributes;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;

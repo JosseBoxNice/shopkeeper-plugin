@@ -1,11 +1,13 @@
-package com.joosua.shopkeepers.itemmaker.state;
+package com.joosua.shopkeepers.itemcreator.state;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+
+import com.joosua.shopkeepers.itemcreator.attributes.AttributeModifierData;
+
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
-import com.joosua.shopkeepers.itemmaker.attributes.AttributeModifierData;
 
 import java.util.ArrayList;
 import java.util.List;

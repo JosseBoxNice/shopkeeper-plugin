@@ -1,4 +1,4 @@
-package com.joosua.shopkeepers.itemmaker.utils;
+package com.joosua.shopkeepers.itemcreator.utils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,9 +18,8 @@ public final class ItemUtils {
     public static ItemStack quickItem(Material mat, String name, List<String> lore) {
         ItemStack it = new ItemStack(mat);
         ItemMeta meta = it.getItemMeta();
-        meta.setDisplayName(name);
+        if (name != null && !name.isBlank()) meta.setDisplayName(name);
         if (lore != null && !lore.isEmpty()) meta.setLore(new ArrayList<>(lore));
-        // Note: We don't automatically hide attributes anymore - let the user control this
         it.setItemMeta(meta);
         return it;
     }

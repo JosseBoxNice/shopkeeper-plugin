@@ -1,12 +1,13 @@
-package com.joosua.shopkeepers.itemmaker.ui;
+package com.joosua.shopkeepers.itemcreator.ui;
 
-import com.joosua.shopkeepers.itemmaker.state.PlayerState;
-import com.joosua.shopkeepers.itemmaker.utils.ItemMakerConstants;
-import com.joosua.shopkeepers.itemmaker.utils.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+
+import com.joosua.shopkeepers.itemcreator.state.PlayerState;
+import com.joosua.shopkeepers.itemcreator.utils.ItemMakerConstants;
+import com.joosua.shopkeepers.itemcreator.utils.ItemUtils;
 
 import java.util.List;
 

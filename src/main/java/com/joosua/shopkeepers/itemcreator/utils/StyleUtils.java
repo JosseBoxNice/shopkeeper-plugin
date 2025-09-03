@@ -1,9 +1,11 @@
-package com.joosua.shopkeepers.itemmaker.utils;
+package com.joosua.shopkeepers.itemcreator.utils;
 
-import com.joosua.shopkeepers.itemmaker.state.PlayerState;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import com.joosua.shopkeepers.itemcreator.state.PlayerState;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
