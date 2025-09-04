@@ -74,6 +74,7 @@ public class ShopkeepersPlugin extends JavaPlugin {
     getServer().getPluginManager().registerEvents(new EnchUIListener(this), this);
     getServer().getPluginManager().registerEvents(new ChatInputListener(this), this);
     getServer().getPluginManager().registerEvents(new StyleUIListener(this), this);
+    // getServer().getPluginManager().registerEvents(new NameUIListener(this), this);
 
     // Enable keys
     ItemCreatorConstants.init(this);

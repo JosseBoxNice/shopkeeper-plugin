@@ -23,6 +23,8 @@ public class StyleUIListener implements Listener {
     }
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+        String title = event.getView().getTitle();
+        if (!title.equals(ItemCreatorConstants.UI_TITLE_STYLE)) return;
         event.setCancelled(true);
 
         HumanEntity clicker = event.getWhoClicked();
@@ -41,11 +43,11 @@ public class StyleUIListener implements Listener {
             return;
         }
         if (type == Material.NAME_TAG && name.equals(ItemCreatorConstants.BTN_STYLE_SET_NAME)) { 
-            // player.openInventory(uiManager.getNameUIBuilder().buildNameUI(player)); 
+            player.openInventory(uiManager.getNameUIBuilder().buildNameUI(player)); 
             return; 
         }
         if (type == Material.WRITABLE_BOOK && name.equals(ItemCreatorConstants.BTN_STYLE_LORE)) { 
-            // player.openInventory(uiManager.getLoreUIBuilder().buildLoreUI(player)); 
+            //player.openInventory(uiManager.getLoreUIBuilder().buildLoreUI(player)); 
             return; 
         }
         return;
