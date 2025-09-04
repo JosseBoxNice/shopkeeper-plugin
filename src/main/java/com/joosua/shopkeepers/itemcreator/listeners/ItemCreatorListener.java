@@ -94,6 +94,13 @@ public class ItemCreatorListener implements Listener {
             return;
         }
 
+        if (type == Material.NAME_TAG && name.equals(ItemCreatorConstants.BTN_STYLE)) {
+            if (player != null) {
+                if (state.getPreview() == null) {player.sendMessage(ChatColor.RED + "You need to pick an item first!"); return; } 
+                player.openInventory(uiManager.getStyleUIBuilder().buildStyleUI(player));
+            }
+        }
+
         event.setCancelled(true);
     }
 }

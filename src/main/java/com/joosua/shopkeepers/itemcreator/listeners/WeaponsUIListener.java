@@ -55,7 +55,7 @@ public class WeaponsUIListener implements Listener {
             StyleUtils.resetStateStyles(state);
             StyleUtils.applyStyleToPreview(state);
             player.openInventory(uiManager.getMainUIBuilder().buildMainUI(player, state));
-            player.sendMessage(ChatColor.GREEN + "Preview set to " + ItemUtils.getItemDisplayName(clicked, type) + ChatColor.GREEN + ".");
+            player.sendMessage(ChatColor.GREEN + "Preview set to " + ItemUtils.getDisplayName(clicked) + ChatColor.GREEN + ".");
         }
         event.setCancelled(true);
     }

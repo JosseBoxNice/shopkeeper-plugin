@@ -90,11 +90,4 @@ public final class ItemUtils {
         String name = mat.name().toLowerCase(Locale.ROOT).replace('_', ' ');
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
-
-    public static String getItemDisplayName(ItemStack item, Material type) {
-        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-            return item.getItemMeta().getDisplayName();
-        }
-        return type.name();
-    }
 }
