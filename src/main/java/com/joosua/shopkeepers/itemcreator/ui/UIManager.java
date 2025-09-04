@@ -3,6 +3,7 @@ package com.joosua.shopkeepers.itemcreator.ui;
 import com.joosua.shopkeepers.ShopkeepersPlugin;
 import com.joosua.shopkeepers.itemcreator.ui.style.StyleUIBuilder;
 import com.joosua.shopkeepers.itemcreator.ui.style.NameUIBuilder;
+import com.joosua.shopkeepers.itemcreator.ui.style.NameColorUIBuilder;
 
 public class UIManager {
     private final MainUIBuilder mainUIBuilder;
@@ -13,6 +14,7 @@ public class UIManager {
     private final EnchUIBuilder enchUIBuilder;
     private final StyleUIBuilder styleUIBuilder;
     private final NameUIBuilder nameUIBuilder;
+    private final NameColorUIBuilder nameColorUIBuilder;
 
     public UIManager(ShopkeepersPlugin plugin) {
         this.mainUIBuilder = new MainUIBuilder();
@@ -23,6 +25,7 @@ public class UIManager {
         this.enchUIBuilder = new EnchUIBuilder(plugin);
         this.styleUIBuilder = new StyleUIBuilder(plugin);
         this.nameUIBuilder = new NameUIBuilder(plugin);
+        this.nameColorUIBuilder = new NameColorUIBuilder(plugin);
     }
 
     public MainUIBuilder getMainUIBuilder() {
@@ -55,5 +58,9 @@ public class UIManager {
 
     public NameUIBuilder getNameUIBuilder() {
         return nameUIBuilder;
+    }
+
+    public NameColorUIBuilder getNameColorUIBuilder() {
+        return nameColorUIBuilder;
     }
 }

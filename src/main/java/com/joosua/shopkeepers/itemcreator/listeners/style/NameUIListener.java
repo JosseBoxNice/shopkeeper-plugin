@@ -44,7 +44,7 @@ public class NameUIListener implements Listener {
             s.setAwaitingNameInput(true); player.closeInventory(); player.sendMessage(ChatColor.GOLD + "Type the new item name in chat."); return;
         }
         if (type == Material.GRAY_DYE && name.equals(ItemCreatorConstants.BTN_NAME_SETCOLOR)) {
-            // player.openInventory(uiManager.getNameColorUIBuilder().buildNameColorUI(player)); return;
+            player.openInventory(uiManager.getNameColorUIBuilder().buildNameColorUI(player)); return;
         }
         if (type == Material.FEATHER && name.equals(ItemCreatorConstants.BTN_NAME_FORMAT)) {
             // player.openInventory(uiManager.getNameFormatUIBuilder().buildNameFormatUI(player)); return;
