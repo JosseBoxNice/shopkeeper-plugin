@@ -3,16 +3,22 @@ package com.joosua.shopkeepers.itemcreator.listeners;
 import com.joosua.shopkeepers.ShopkeepersPlugin;
 import com.joosua.shopkeepers.itemcreator.handlers.EnchantChatHandler;
 import com.joosua.shopkeepers.itemcreator.state.PlayerState;
+import com.joosua.shopkeepers.itemcreator.utils.StyleUtils;
+import com.joosua.shopkeepers.itemcreator.ui.UIManager;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 public class ChatInputListener implements Listener {
     private final ShopkeepersPlugin plugin;
+    private final UIManager uiManager;
 
     public ChatInputListener(ShopkeepersPlugin plugin) {
         this.plugin = plugin;
+        this.uiManager = new UIManager(plugin);
     }
 
     @EventHandler
@@ -24,21 +30,18 @@ public class ChatInputListener implements Listener {
             EnchantChatHandler handler = new EnchantChatHandler(plugin);
             handler.handleEnchantChat(event, player, state); return;
         }
-        // Name text
-        /*
         if (state.isAwaitingNameInput()) {
             event.setCancelled(true);
             String name = event.getMessage().trim();
             Bukkit.getScheduler().runTask(plugin, () -> {
                 state.setNameText(name);
                 StyleUtils.applyStyleToPreview(state);
-                player.openInventory(builder.buildNameUI(player));
+                player.openInventory(uiManager.getNameUIBuilder().buildNameUI(player));
                 player.sendMessage(ChatColor.GOLD + "Name set.");
-                s.setAwaitingNameInput(false);
+                state.setAwaitingNameInput(false);
             });
             return;
         }
-        */
         // Name hex
         /*
         if (s.isAwaitingNameHexInput()) {

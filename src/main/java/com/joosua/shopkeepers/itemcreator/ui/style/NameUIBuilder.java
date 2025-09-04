@@ -21,7 +21,7 @@ public class NameUIBuilder extends BaseUIBuilder {
 
     public Inventory buildNameUI(Player player) {
         var state = plugin.getPlayerStateManager().get(player.getUniqueId());
-        Inventory ui = Bukkit.createInventory(player, 36, ItemCreatorConstants.UI_TITLE_STYLE);
+        Inventory ui = Bukkit.createInventory(player, 36, ItemCreatorConstants.UI_TITLE_STYLE_NAME);
         fillInventory(ui);
 
         // Navigation buttons

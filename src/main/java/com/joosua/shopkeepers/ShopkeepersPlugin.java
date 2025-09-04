@@ -8,7 +8,8 @@ import com.joosua.shopkeepers.itemcreator.listeners.ArmorUIListener;
 import com.joosua.shopkeepers.itemcreator.listeners.MiscUIListener;
 import com.joosua.shopkeepers.itemcreator.listeners.EnchUIListener;
 import com.joosua.shopkeepers.itemcreator.listeners.ChatInputListener;
-import com.joosua.shopkeepers.itemcreator.listeners.StyleUIListener;
+import com.joosua.shopkeepers.itemcreator.listeners.style.StyleUIListener;
+import com.joosua.shopkeepers.itemcreator.listeners.style.NameUIListener;
 import com.joosua.shopkeepers.itemcreator.state.PlayerStateManager;
 import com.joosua.shopkeepers.listeners.Editor.EditorListener;
 import com.joosua.shopkeepers.listeners.Editor.TradeAdderListener;
@@ -74,7 +75,7 @@ public class ShopkeepersPlugin extends JavaPlugin {
     getServer().getPluginManager().registerEvents(new EnchUIListener(this), this);
     getServer().getPluginManager().registerEvents(new ChatInputListener(this), this);
     getServer().getPluginManager().registerEvents(new StyleUIListener(this), this);
-    // getServer().getPluginManager().registerEvents(new NameUIListener(this), this);
+    getServer().getPluginManager().registerEvents(new NameUIListener(this), this);
 
     // Enable keys
     ItemCreatorConstants.init(this);

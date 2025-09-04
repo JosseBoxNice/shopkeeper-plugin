@@ -1,4 +1,4 @@
-package com.joosua.shopkeepers.itemcreator.listeners;
+package com.joosua.shopkeepers.itemcreator.listeners.style;
 
 import com.joosua.shopkeepers.itemcreator.utils.ItemUtils;
 import com.joosua.shopkeepers.ShopkeepersPlugin;
@@ -47,7 +47,7 @@ public class StyleUIListener implements Listener {
             return; 
         }
         if (type == Material.WRITABLE_BOOK && name.equals(ItemCreatorConstants.BTN_STYLE_LORE)) { 
-            //player.openInventory(uiManager.getLoreUIBuilder().buildLoreUI(player)); 
+            // player.openInventory(uiManager.getLoreUIBuilder().buildLoreUI(player)); 
             return; 
         }
         return;
